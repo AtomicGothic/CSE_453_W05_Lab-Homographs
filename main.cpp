@@ -1,6 +1,17 @@
+#include <direct.h>
+#define GetCurrentDir _getcwd
+
+
+//#ifdef WINDOWS
+//#include <direct.h>
+//#define GetCurrentDir _getcwd
+//#else
+//#include <unistd.h>
+//#define GetCurrentDir getcwd
+//#endif
+
 #include <iostream>
 #include <string>
- 
 
 using namespace std;
 
@@ -23,6 +34,13 @@ const string  GetFile()
 	return fName;
 }
 
+std::string get_current_dir() {
+	char buff[FILENAME_MAX]; //create string buffer to hold path
+	GetCurrentDir(buff, FILENAME_MAX);
+	string current_working_dir(buff);
+	return current_working_dir;
+}
+
 /**********************************************************************
  * checkPath
  * The function which checks Path Homograph
@@ -36,6 +54,8 @@ bool checkPath()
 	cin >> fName1;
 	cout << "File name 2> ";
 	cin >> fName2;
+
+	cout << get_current_dir() << "\\" << fName1 << "\n";
 
 	return true;
 }
@@ -52,7 +72,7 @@ int main()
 	}
 	else
 	{
-		cout << "Nonhomograph\n";
+		cout << "Non-homograph\n";
 	}
 		
 	
