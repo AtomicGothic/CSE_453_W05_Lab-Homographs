@@ -1,14 +1,9 @@
 #include <iostream>
+#include <fstream>
 #include <string>
  
 
 using namespace std;
-
-
-
-
-
-
 
 /**********************************************************************
  * GetFile
@@ -41,12 +36,9 @@ bool checkPath()
 }
 
 
-
-
-
 int main()
 {
-	if (checkPath() == true)
+	if (checkPath()) // no need to have "== true" because this is redundant. 
 	{
 		cout << "Homograph\n";
 	}
