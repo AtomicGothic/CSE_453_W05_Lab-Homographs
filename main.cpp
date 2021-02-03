@@ -13,6 +13,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <vector>
 
 using namespace std;
 
@@ -23,9 +24,9 @@ using namespace std;
 	 something like ifstream fin.
 * [TO DO] have a rendering function. This might be fin.open(e);. In other
 	 words, this function turns an encoding into a rendition.
-* [TO DO] c should be a canon. What would that canon be? Since we are checking
+* [DONE] c should be a canon. What would that canon be? Since we are checking
 	 for valid paths, only include english letters, ".", "/" , ":", and
-	 "\".
+	 "\", etc.
 * [TO DO] we need a canonicalization function. Note, we must not use
 	 "canonical()" because that's part of the <filesystem> library.
 * [TO DO] we need a homograph function that will determine if two encodings are the
@@ -33,6 +34,30 @@ using namespace std;
 ***********************************************************************************/
 
 
+
+std::string canonize(std::string encoding)
+{
+	 std::string scrubbedEncoding;
+	 
+	 // iterate through every element of the encoding and make sure
+	 // each character is lower case and then fill the scrubbed string.
+	 for (int i = 0; i < encoding.size(); i++)
+	 {
+		  scrubbedEncoding.push_back(tolower(encoding[i]));
+	 }
+
+	 // possibly could use a pre-determined set list of acceptable characters.
+	 /*std::vector<std::string> canon{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
+										 "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+										  "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
+										  "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
+										  "w", "x", "y", "z", "..", ".", "<", ">", ":", "\"", "/", "\\",
+										  "|", "?", "*", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+										  "!", "@", "#", "$", "%", "^", "&", "(", ")", "-", "_", "=", "+",
+										  "`", "~", ",", "[", "]", "{", "}", "\'"};*/
+
+	 return scrubbedEncoding;
+}
 
 
 
@@ -98,13 +123,18 @@ bool checkPath()
 
 int main()
 {
-	if (checkPath() == true)
+	 std::string temp = "";
+	 std::cout << "Enter test text: ";
+	 std::getline(std::cin, temp);
+	 std::cout << canonize(temp);
+
+	/*if (checkPath() == true)
 	{
 		cout << "Homograph\n";
 	}
 	else
 	{
 		cout << "Non-homograph\n";
-	}
+	}*/
 }
 
