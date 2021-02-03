@@ -17,7 +17,20 @@
 using namespace std;
 
 
-
+/***********************************************************************************
+* [TO DO] e should be the path that is possibly encoded. 
+* [TO DO] r should be the file handle. In other words, this should be
+	 something like ifstream fin.
+* [TO DO] have a rendering function. This might be fin.open(e);. In other
+	 words, this function turns an encoding into a rendition.
+* [TO DO] c should be a canon. What would that canon be? Since we are checking
+	 for valid paths, only include english letters, ".", "/" , ":", and
+	 "\".
+* [TO DO] we need a canonicalization function. Note, we must not use
+	 "canonical()" because that's part of the <filesystem> library.
+* [TO DO] we need a homograph function that will determine if two encodings are the
+	 same.
+***********************************************************************************/
 
 
 
@@ -85,7 +98,6 @@ bool checkPath()
 
 int main()
 {
-
 	if (checkPath() == true)
 	{
 		cout << "Homograph\n";
@@ -94,7 +106,5 @@ int main()
 	{
 		cout << "Non-homograph\n";
 	}
-	
-    std::cout << "Hello World!\n";
 }
 
