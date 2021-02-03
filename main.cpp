@@ -16,18 +16,12 @@
 
 using namespace std;
 
-/**********************************************************************
- * GetFile
- * The function which gets the file name
- ***********************************************************************/
-const string  GetFile()
-{
-	// get the fileName
-	string fName = "";
-	std::cout << "What is the filename? ";
-	std::cin >> fName;
-	return fName;
-}
+
+
+
+
+
+
 
 /**********************************************************************
  * GetCurrentPath
@@ -48,10 +42,8 @@ string GetFullPathFromPartial(char* partialPath)
 {
 	char full[_MAX_PATH];
 	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
-		//printf("Full path is: %s\n", full);
 		return full;
 	else
-		//printf("Invalid path\n");
 		return "Invalid path\n";
 }
 
@@ -76,12 +68,8 @@ bool checkPath()
 	// Retrieving Full path of file 1
 	fFullPath1= get_current_dir() + "\\" + fName1;
 
-	//cout << get_current_dir() << "\\" << fName1 << "\n";
-
 	//Retrieving Full path of file 2
-	std::string str = fName2;
-	char* c = const_cast<char*>(str.c_str());
-	//std::cout << c;
+	char* c = const_cast<char*>(fName2.c_str());
 	fFullPath2 = GetFullPathFromPartial(c);
 
 	if (fFullPath1 == fFullPath2)
