@@ -14,6 +14,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -37,26 +38,43 @@ using namespace std;
 
 std::string canonize(std::string encoding)
 {
-	 std::string scrubbedEncoding;
+		 	 // possibly could use a pre-determined set list of acceptable characters.
+	 std::vector<char> canon{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
+										 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
+										  'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
+										  'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
+										  'w', 'x', 'y', 'z', '.', '<', '>', ':', '\'', '/', '\\',
+										  '|', '*', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0',
+										  '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
+										  '`', '~', ',', '[', ']', '{', '}', '\"'};
+
+//	 std::string scrubbedEncoding;
 	 
 	 // iterate through every element of the encoding and make sure
 	 // each character is lower case and then fill the scrubbed string.
+
+	 //Loop through each character in the string and check to see if the 
+	 //character is contained within the canon. If it isn't in the canon,
+	 //print a message to the user.
 	 for (int i = 0; i < encoding.size(); i++)
 	 {
-		  scrubbedEncoding.push_back(tolower(encoding[i]));
+//		  scrubbedEncoding.push_back(tolower(encoding[i]));
+
+
+		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
+
+		if(result == end(canon)){
+			std::cout << "There is an invalid character ";
+			std::cout << encoding[i];
+			std::cout << " at position ";
+			std::cout << (i + 1);
+			std::cout << endl;
+		}
+
 	 }
 
-	 // possibly could use a pre-determined set list of acceptable characters.
-	 /*std::vector<std::string> canon{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L",
-										 "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
-										  "Y", "Z", "a", "b", "c", "d", "e", "f", "g", "h", "i", "j",
-										  "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v",
-										  "w", "x", "y", "z", "..", ".", "<", ">", ":", "\"", "/", "\\",
-										  "|", "?", "*", "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
-										  "!", "@", "#", "$", "%", "^", "&", "(", ")", "-", "_", "=", "+",
-										  "`", "~", ",", "[", "]", "{", "}", "\'"};*/
 
-	 return scrubbedEncoding;
+	 return encoding;
 }
 
 
