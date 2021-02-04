@@ -116,17 +116,19 @@ bool checkPath()
 	string fFullPath1 = "";
 	string fFullPath2 = "";
 
-	cout << "File name 1> ";
-	cin >> fName1;
-	cout << "File name 2> ";
-	cin >> fName2;
-
 	// Retrieving Full path of file 1
+	cout << "File name 1> ";
+	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
 	fFullPath1= get_current_dir() + "\\" + fName1;
+	std::cout << "fFullPath1 = " << fFullPath1 << std::endl; //added to help visualize the path being captured.
+
 
 	//Retrieving Full path of file 2
+	cout << "File name 2> ";
+	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
 	char* c = const_cast<char*>(fName2.c_str());
 	fFullPath2 = GetFullPathFromPartial(c);
+	std::cout << "fFullPath2 = " << fFullPath2 << std::endl; //added to help visualize the path being captured.
 
 	if (fFullPath1 == fFullPath2)
 	{
@@ -141,18 +143,13 @@ bool checkPath()
 
 int main()
 {
-	 std::string temp = "";
-	 std::cout << "Enter test text: ";
-	 std::getline(std::cin, temp);
-	 std::cout << canonize(temp);
-
-	/*if (checkPath() == true)
+	if (checkPath() == true)
 	{
 		cout << "Homograph\n";
 	}
 	else
 	{
 		cout << "Non-homograph\n";
-	}*/
+	}
 }
 
