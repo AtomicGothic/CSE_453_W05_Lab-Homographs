@@ -1,44 +1,16 @@
 #include <direct.h>
-#define GetCurrentDir _getcwd
-
-
-//#ifdef WINDOWS
-//#include <direct.h>
-//#define GetCurrentDir _getcwd
-//#else
-//#include <unistd.h>
-//#define GetCurrentDir getcwd
-//#endif
-
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <vector>
 #include <algorithm>
+#define GetCurrentDir _getcwd
 
 using namespace std;
 
-
-/***********************************************************************************
-* [TO DO] e should be the path that is possibly encoded. 
-* [TO DO] r should be the file handle. In other words, this should be
-	 something like ifstream fin.
-* [TO DO] have a rendering function. This might be fin.open(e);. In other
-	 words, this function turns an encoding into a rendition.
-* [DONE] c should be a canon. What would that canon be? Since we are checking
-	 for valid paths, only include english letters, ".", "/" , ":", and
-	 "\", etc.
-* [TO DO] we need a canonicalization function. Note, we must not use
-	 "canonical()" because that's part of the <filesystem> library.
-* [TO DO] we need a homograph function that will determine if two encodings are the
-	 same.
-***********************************************************************************/
-
-
-
 std::string canonize(std::string encoding)
 {
-		 	 // possibly could use a pre-determined set list of acceptable characters.
+	 // a pre-determined set list of acceptable characters.
 	 std::vector<char> canon{'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L',
 										 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X',
 										  'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j',
@@ -48,18 +20,11 @@ std::string canonize(std::string encoding)
 										  '!', '@', '#', '$', '%', '^', '&', '(', ')', '-', '_', '=', '+',
 										  '`', '~', ',', '[', ']', '{', '}', '\"'};
 
-//	 std::string scrubbedEncoding;
-	 
-	 // iterate through every element of the encoding and make sure
-	 // each character is lower case and then fill the scrubbed string.
-
 	 //Loop through each character in the string and check to see if the 
 	 //character is contained within the canon. If it isn't in the canon,
 	 //print a message to the user.
 	 for (int i = 0; i < encoding.size(); i++)
 	 {
-//		  scrubbedEncoding.push_back(tolower(encoding[i]));
-
 
 		auto result = std::find(canon.begin(), canon.end(), encoding[i]);
 
@@ -98,9 +63,13 @@ string GetFullPathFromPartial(char* partialPath)
 {
 	char full[_MAX_PATH];
 	if (_fullpath(full, partialPath, _MAX_PATH) != NULL)
-		return full;
+	{
+		  return full;
+	}
 	else
-		return "Invalid path\n";
+	{
+		 return "Invalid path\n";
+	}
 }
 
 
@@ -121,7 +90,6 @@ bool checkPath()
 	cout << "File name 1> ";
 	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
 	fFullPath1= get_current_dir() + "\\" + fName1;
-	std::cout << "fFullPath1 = " << fFullPath1 << std::endl; //added to help visualize the path being captured.
 
 
 	//Retrieving Full path of file 2
@@ -129,7 +97,6 @@ bool checkPath()
 	std::getline(std::cin, fName2); //changed from simple std::cin to std::getline to allow user to input whitespaces
 	char* c = const_cast<char*>(fName2.c_str());
 	fFullPath2 = GetFullPathFromPartial(c);
-	std::cout << "fFullPath2 = " << fFullPath2 << std::endl; //added to help visualize the path being captured.
 
 	if (fFullPath1 == fFullPath2)
 	{
@@ -147,14 +114,21 @@ bool checkPath()
  ***********************************************************************/
 bool prompt()
 {
-	char answer;
-	std::cout << "Would you like to try another test? (y/n) : ";
-	std::cin >> answer;
+	char answer = 'q'; // initialized on the off chance that an unitialized variable would be y or n.
 
-	if(tolower(answer) == 'y'){
+	// this while loop makes sure that only y or n is accepted.
+	while (tolower(answer) != 'y' && tolower(answer) != 'n')
+	{
+		 std::cout << "Would you like to do a homograph test? (y/n): ";
+		 std::cin >> answer;
+	}
+
+	if(tolower(answer) == 'y')
+	{
 		return true;
 	}
-	else {
+	else
+	{
 		return false;
 	}
 }
@@ -162,17 +136,17 @@ bool prompt()
 
 int main()
 {
-	do {
-	if (checkPath() == true)
-	{
-		cout << "Homograph\n";
-	}
-	else
-	{
-		cout << "Non-homograph\n";
-	}
-	}
-	while (prompt());
+	 while (prompt())
+	 {
+		  if (checkPath() == true)
+		  {
+				cout << "Homograph\n";
+		  }
+		  else
+		  {
+				cout << "Non-homograph\n";
+		  }
+	 }
 
 }
 
