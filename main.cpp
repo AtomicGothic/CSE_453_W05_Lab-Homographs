@@ -117,6 +117,7 @@ bool checkPath()
 	string fFullPath2 = "";
 
 	// Retrieving Full path of file 1
+	cin.ignore();
 	cout << "File name 1> ";
 	std::getline(std::cin, fName1); //changed from simple std::cin to std::getline to allow user to input whitespaces
 	fFullPath1= get_current_dir() + "\\" + fName1;
@@ -140,9 +141,28 @@ bool checkPath()
 	}
 }
 
+/**********************************************************************
+ * prompt
+ * simple prompt function returning a bool 
+ ***********************************************************************/
+bool prompt()
+{
+	char answer;
+	std::cout << "Would you like to try another test? (y/n) : ";
+	std::cin >> answer;
+
+	if(tolower(answer) == 'y'){
+		return true;
+	}
+	else {
+		return false;
+	}
+}
+
 
 int main()
 {
+	do {
 	if (checkPath() == true)
 	{
 		cout << "Homograph\n";
@@ -151,5 +171,8 @@ int main()
 	{
 		cout << "Non-homograph\n";
 	}
+	}
+	while (prompt());
+
 }
 
